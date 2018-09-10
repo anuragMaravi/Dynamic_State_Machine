@@ -1,0 +1,77 @@
+{
+  "stateMachineName": "Microwave",
+  "events": [
+    {
+      "name": "Microwave Running",
+      "type": "continuous"
+    },
+    {
+      "name": "Chime",
+      "type": "discrete"
+    },
+    {
+      "name": "Door Open",
+      "type": "discrete"
+    },
+    {
+      "name": "Door Close",
+      "type": "discrete"
+    }
+  ],
+  "states": [
+    {
+      "name": "Door Ajar",
+      "transition": [
+        {
+          "event": "Door Close",
+          "action": "Door Close"
+        }
+      ]
+    },
+    {
+      "name": "Door Close",
+      "transition": [
+        {
+          "event": "Door Open",
+          "action": "Door Ajar"
+        },
+        {
+          "event": "Microwave Running",
+          "action": "In Use"
+        }
+      ]
+    },
+    {
+      "name": "In Use",
+      "transition": [
+        {
+          "event": "Door Open",
+          "action": "Interrupted"
+        },
+        {
+          "event": "Chime",
+          "action": "Finished"
+        }
+      ]
+    },
+    {
+      "name": "Interrupted",
+      "transition": [
+        {
+          "event": "Door Close",
+          "action": "Door Close"
+        }
+      ]
+    },
+    {
+      "name": "Finished",
+      "transition": [
+        {
+          "event": "Door Open",
+          "action": "Door Ajar"
+        }
+      ]
+    }
+  ],
+  "initialState": "Door Ajar"
+}
